@@ -23,3 +23,6 @@ connectInject:
   enabled: true
   # inject an envoy sidecar into every new pod, except for those with annotations that prevent injection
   default: true
+# Enable the CRD controller
+controller:
+  enabled: true
