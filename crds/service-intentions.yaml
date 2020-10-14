@@ -1,4 +1,4 @@
-# L7 Intentions can only be applied to services that use the HTTP protocol
+# Application aware intentions can only be applied to services that use the HTTP protocol
 # so you must first define service default config entries for the targetted
 # services.
 apiVersion: consul.hashicorp.com/v1alpha1
@@ -29,15 +29,7 @@ spec:
   - name: frontend
     # The set of permissions to apply when frontend is the traffic source
     permissions:
-    # Permissions are progressively applied and additive-start by denying all traffic
-    - action: deny
-      http:
-        pathPrefix: "/"
-    # Permissions with a high degree of specificity will override less explicit permissions
-    # Add this to always deny traffic from the frontend service to /health route
-    - action: deny
-      http:
-        pathExact: "/health"
+     # The first permission to match in the list is terminal and stops further evaluation.
     # This permission now defines the conditions that will be allowed
     # Allo traffic to all paths for the GET, PUT, POST, DELETE verbs as long as an
     # Authorization header is present
@@ -52,3 +44,11 @@ spec:
         header:
         - name: "Authorization"
           present: true
+        # Permissions are progressively applied and additive-start by denying all traffic
+    - action: deny
+      http:
+        pathPrefix: "/"
+    # Add this to always deny traffic from the frontend service to /health route
+    - action: deny
+      http:
+        pathExact: "/health"
