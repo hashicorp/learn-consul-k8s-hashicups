@@ -1,3 +1,6 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
+
 # Application aware intentions can only be applied to services that use the HTTP protocol
 # so you must first define service default config entries for the targetted
 # services.
